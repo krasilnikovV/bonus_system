@@ -1,5 +1,7 @@
 Django==2.2.3
+django-templated-mail==1.1.1
 djangorestframework==3.9.4
+djoser==1.7.0
 mysqlclient==1.4.2
 pytz==2019.1
 sqlparse==0.3.0
