@@ -17,7 +17,7 @@ class Operation(models.Model):
                              null=False,
                              db_index=True,
                              editable=False)
-    amount = models.DecimalField(max_digits=13, decimal_places=0, default=0, blank=False, null=False)
+    amount = models.DecimalField(max_digits=13, decimal_places=0, default=0, blank=False, null=False, editable=False)
     operation_type = models.ForeignKey('OperationTypes', on_delete=models.PROTECT, blank=False, null=False)
 
     def __str__(self):
