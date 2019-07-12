@@ -4,7 +4,6 @@ from datetime import date
 
 
 class Command(BaseCommand):
-    help = 'Closes the specified polls for voting'
 
     def add_arguments(self, parser):
         parser.add_argument('poll_ids', nargs='+', type=int)

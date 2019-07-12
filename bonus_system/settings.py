@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'bonuses',
-    'polls'
+    'scripts'
 ]
 
 MIDDLEWARE = [
