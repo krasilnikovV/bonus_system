@@ -3,6 +3,8 @@ from django.urls import path
 from bonuses import views
 
 urlpatterns = [
-    path('user/detail/<int:pk>/', views.UserDetailView.as_view()),
+    path('users/detail/<int:pk>/', views.UserDetailView.as_view()),
     path('users/all/', views.UserListView.as_view()),
+    path('bonuses/increase/', views.OperationIncreaseView.as_view()),
+    path('bonuses/decrease/', views.OperationDecreaseView.as_view()),
 ]

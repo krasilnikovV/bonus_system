@@ -87,7 +87,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAdminUser',
         'rest_framework.permissions.IsAuthenticated',
-        'bonuses.permissions.IsOwner'
+        'bonuses.permissions.IsOwnerOrAdmin'
     ),
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.ScopedRateThrottle',
