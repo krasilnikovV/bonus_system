@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from bonuses import models
-from decimal import Decimal
+from bonuses import models, validators
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,7 +12,9 @@ class OperationSerializer(serializers.ModelSerializer):
     amount = serializers.DecimalField(max_digits=13, decimal_places=0)
     user = UserSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True)
-    expiration_date = serializers.DateField(default=None, allow_null=True)
+    expiration_date = serializers.DateField(default=None,
+                                            allow_null=True,
+                                            validators=[validators.not_earlier_today_validator])
 
     class Meta:
         model = models.Operation
