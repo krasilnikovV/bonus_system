@@ -19,6 +19,7 @@ class Operation(models.Model):
                              editable=False)
     amount = models.DecimalField(max_digits=13, decimal_places=0, default=0, blank=False, null=False, editable=False)
     operation_type = models.ForeignKey('OperationTypes', on_delete=models.PROTECT, blank=False, null=False)
+    expiration_date = models.DateField(null=True, blank=True, default=None)
 
     def __str__(self):
         return 'Operation id : %s' % self.id.__str__()

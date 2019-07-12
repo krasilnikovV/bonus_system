@@ -1,3 +1,5 @@
+import copy
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
@@ -40,7 +42,7 @@ class OperationIncreaseView(APIView):
 
 
 class OperationDecreaseView(APIView):
-    permission_classes = (IsOwnerOrAdmin, )
+    permission_classes = (IsOwnerOrAdmin,)
 
     def post(self, request):
         serializer = serializers.OperationSerializer(data=request.data)
@@ -51,4 +53,16 @@ class OperationDecreaseView(APIView):
                 return Response({"detail": "Not enough bonuses"}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save(operation_type_id=2)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MultipleIncreaseOperationView(APIView):
+    permission_classes = (IsAdminUser,)
+
+    def post(self, request):
+        serializer = serializers.MultipleIncreaseOperationSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.create_operations()
+
+            return Response(serializers.OperationSerializer(data, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
