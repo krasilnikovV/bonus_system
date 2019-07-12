@@ -36,7 +36,9 @@ class MultipleIncreaseOperationSerializer(serializers.Serializer):
     user_ids = IdSerializer(many=True, write_only=True)
     users = UserSerializer(many=True, read_only=True)
     amount = serializers.DecimalField(max_digits=13, decimal_places=0, allow_null=False)
-    expiration_date = serializers.DateField(default=None, allow_null=True)
+    expiration_date = serializers.DateField(default=None,
+                                            allow_null=True,
+                                            validators=[validators.not_earlier_today_validator])
 
     def __create_operation__(self, data):
         serializer = OperationSerializer(data=data)
