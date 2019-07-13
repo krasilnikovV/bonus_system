@@ -8,4 +8,6 @@ urlpatterns = [
     path('bonuses/increase/', views.OperationIncreaseView.as_view()),
     path('bonuses/decrease/', views.OperationDecreaseView.as_view()),
     path('bonuses/multiple-increase/', views.MultipleIncreaseOperationView.as_view()),
+    path('bonuses/operation/<uuid:pk>/', views.OperationDetailDeleteView.as_view()),
+    path('bonuses/operation/all/', views.OperationListView.as_view())
 ]

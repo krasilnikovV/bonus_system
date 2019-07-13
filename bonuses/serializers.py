@@ -15,10 +15,11 @@ class OperationSerializer(serializers.ModelSerializer):
     expiration_date = serializers.DateField(default=None,
                                             allow_null=True,
                                             validators=[validators.not_earlier_today_validator])
+    id = serializers.UUIDField(read_only=True)
 
     class Meta:
         model = models.Operation
-        fields = ('user', 'user_id', 'amount', 'operation_type', 'expiration_date')
+        fields = ('id', 'user', 'user_id', 'amount', 'operation_type', 'expiration_date')
         depth = 1
 
 

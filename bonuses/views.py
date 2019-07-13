@@ -1,9 +1,11 @@
-import copy
+
 
 from rest_framework.views import APIView
+from rest_framework.generics import RetrieveDestroyAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from rest_framework import status
+from rest_framework.exceptions import NotFound
 
 from bonuses import models, serializers
 from bonuses.permissions import IsOwnerOrAdmin
@@ -66,3 +68,34 @@ class MultipleIncreaseOperationView(APIView):
 
             return Response(serializers.OperationSerializer(data, many=True).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OperationDetailDeleteView(RetrieveDestroyAPIView):
+    permission_classes = (IsAdminUser,)
+    serializer_class = serializers.OperationSerializer
+
+    def get_object(self, pk):
+        try:
+            return models.Operation.objects.get(pk=pk)
+        except models.Operation.DoesNotExist:
+            raise NotFound
+
+    def get(self, request, pk):
+        operation = self.get_object(pk)
+        serializer = serializers.OperationSerializer(operation)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        operation = self.get_object(pk)
+        operation.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class OperationListView(ListAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = models.Operation.objects.all()
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = serializers.OperationSerializer(queryset, many=True)
+        return Response(serializer.data)
